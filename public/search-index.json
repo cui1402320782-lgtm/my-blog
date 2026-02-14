@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "欢迎来到我的博客",
+    "excerpt": "这是我的第一篇博客文章，介绍了这个博客的功能和特性。",
+    "content": "\n# 欢迎来到我的博客\n\n这是我的第一篇博客文章！这个博客使用 **Next.js** + **MDX** 构建，具有以下功能：\n\n## 功能特性\n\n### 1. Markdown 支持\n- 支持标准 Markdown 语法\n- 支持代码高亮\n- 支持表格、列表等\n\n### 2. 评论系统\n使用 Giscus 评论系统，基于 GitHub Discussions：\n- 免费、开源\n- 支持 Markdown\n- 支持表情反应\n\n### 3. 搜索功能\n使用 Fuse.js 实现模糊搜索：\n- 支持中文搜索\n- 模糊匹配\n- 实时搜索建议\n\n### 4. SEO 优化\n- 自动生成 Sitemap\n- 自动生成 RSS Feed\n- 完善的 Meta 标签\n\n## 代码示例\n\n```typescript\n// 示例代码\nfunction hello() {\n  console.log('Hello, World!')\n}\n```\n\n## 开始使用\n\n1. 在 `content/blog/` 目录下创建 `.mdx` 文件\n2. 添加 front matter（标题、日期、标签等）\n3. ",
+    "date": "2025-02-14",
+    "tags": [
+      "博客",
+      "Next.js",
+      "介绍"
+    ]
+  },
+  {
+    "slug": "markdown-guide",
+    "title": "Markdown 使用指南",
+    "excerpt": "这是一篇纯 Markdown 格式的文章，介绍如何使用 Markdown 编写博客。",
+    "content": "\n# Markdown 使用指南\n\n这是一篇使用 **.md** 格式的文章，不是 .mdx 格式。\n\n## 什么是 Markdown\n\nMarkdown 是一种轻量级标记语言，它允许你使用易读易写的纯文本格式编写文档。\n\n## 基本语法\n\n### 标题\n\n```markdown\n# 一级标题\n## 二级标题\n### 三级标题\n```\n\n### 强调\n\n```markdown\n**粗体**\n*斜体*\n~~删除线~~\n```\n\n### 列表\n\n无序列表：\n- 项目 1\n- 项目 2\n- 项目 3\n\n有序列表：\n1. 第一步\n2. 第二步\n3. 第三步\n\n### 链接和图片\n\n```markdown\n[链接文字](https://example.com)\n![图片描述](image.jpg)\n```\n\n### 代码\n\n行内代码：`console.log('hello')`\n\n代码块：\n\n```javascript\nfunction greet(name) {\n  return `Hello, ${name}!`\n}\n```\n\n### 引用\n\n> 这是一段引用文字。\n> 可以有多行。\n\n##",
+    "date": "2025-02-14",
+    "tags": [
+      "Markdown",
+      "教程",
+      "写作"
+    ]
+  }
+]
