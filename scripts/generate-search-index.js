@@ -13,10 +13,13 @@ function getAllPosts() {
   return fileNames
     .filter((fileName) => fileName.endsWith('.mdx') || fileName.endsWith('.md'))
     .map((fileName) => {
-      const slug = fileName.replace(/\.mdx?$/, '')
       const fullPath = path.join(postsDirectory, fileName)
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data, content } = matter(fileContents)
+
+      // 优先使用 front matter 中的 slug，否则使用文件名
+      const fileSlug = fileName.replace(/\.mdx?$/, '')
+      const slug = data.slug || fileSlug
 
       return {
         slug,

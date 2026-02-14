@@ -29,15 +29,16 @@ export function getAllPosts(): Post[] {
   const allPostsData = fileNames
     .filter((fileName) => fileName.endsWith('.mdx') || fileName.endsWith('.md'))
     .map((fileName) => {
-      // 移除文件扩展名获取 slug
-      const slug = fileName.replace(/\.mdx?$/, '')
-
       // 读取文件内容
       const fullPath = path.join(postsDirectory, fileName)
       const fileContents = fs.readFileSync(fullPath, 'utf8')
 
       // 解析 front matter
       const { data, content } = matter(fileContents)
+
+      // 优先使用 front matter 中的 slug，否则使用文件名
+      const fileSlug = fileName.replace(/\.mdx?$/, '')
+      const slug = data.slug || fileSlug
 
       // 计算阅读时间（假设每分钟阅读 200 字）
       const words = content.replace(/\s/g, '').length
@@ -63,14 +64,35 @@ export function getAllPosts(): Post[] {
 // 根据 slug 获取单篇文章
 export function getPostBySlug(slug: string): Post | null {
   try {
+    // 策略1: 尝试直接通过 slug 查找文件（英文文件名的文章）
     let fullPath = path.join(postsDirectory, `${slug}.mdx`)
     
-    // 如果 .mdx 不存在，尝试 .md
     if (!fs.existsSync(fullPath)) {
       fullPath = path.join(postsDirectory, `${slug}.md`)
-      if (!fs.existsSync(fullPath)) {
-        return null
+    }
+    
+    // 策略2: 如果直接查找失败，遍历所有文件检查 front-matter 中的 slug
+    if (!fs.existsSync(fullPath)) {
+      const fileNames = fs.readdirSync(postsDirectory)
+        .filter((fileName) => fileName.endsWith('.mdx') || fileName.endsWith('.md'))
+      
+      for (const fileName of fileNames) {
+        const filePath = path.join(postsDirectory, fileName)
+        const fileContents = fs.readFileSync(filePath, 'utf8')
+        const { data } = matter(fileContents)
+        
+        // 检查 front-matter 中的 slug 是否匹配
+        if (data.slug === slug) {
+          fullPath = filePath
+          break
+        }
       }
+    }
+    
+    // 如果还是找不到，返回 null
+    if (!fs.existsSync(fullPath)) {
+      console.error(`文章未找到: ${slug}`)
+      return null
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8')

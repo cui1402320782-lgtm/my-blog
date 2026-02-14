@@ -1,5 +1,6 @@
 ---
 title: "Next.js 博客系统 UI 设计与主题改造"
+slug: "nextjs-blog-ui-theme"
 date: "2026-02-14"
 excerpt: "参考若变的博客风格，使用 Next.js + Tailwind CSS 构建现代化的博客系统，实现亮色/暗色双主题、响应式设计和优雅的交互体验。"
 tags: ["Next.js", "React", "Tailwind CSS", "UI设计", "主题切换"]

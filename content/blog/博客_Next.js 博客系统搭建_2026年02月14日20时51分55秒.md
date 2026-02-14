@@ -1,5 +1,6 @@
 ---
 title: "Next.js 博客系统搭建"
+slug: "nextjs-blog-setup"
 date: "2026-02-14"
 excerpt: "从零开始搭建一个功能完善的 Next.js 博客系统，支持 Markdown/MDX、搜索、评论、RSS 和 SEO"
 tags: ["Next.js", "MDX", "Tailwind", "Fuse.js", "Giscus", "RSS", "Sitemap", "博客"]
