@@ -4,6 +4,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/posts'
 import { GiscusComments } from '@/components/GiscusComments'
 import { Calendar, Clock, Tag, ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
+import { marked } from 'marked'
 
 // 生成静态参数
 export async function generateStaticParams() {
@@ -46,6 +47,9 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     notFound()
   }
 
+  // 将 Markdown 转换为 HTML
+  const htmlContent = marked(post.content)
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -86,7 +90,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         {/* 文章内容 */}
         <div 
           className="prose prose-lg dark:prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
 
         {/* 标签 */}
