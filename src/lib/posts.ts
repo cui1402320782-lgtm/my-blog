@@ -15,7 +15,7 @@ export interface Post {
   tags: string[]
   author: string
   coverImage?: string
-  readingTime?: number
+  readingTime: number
 }
 
 // 获取所有文章

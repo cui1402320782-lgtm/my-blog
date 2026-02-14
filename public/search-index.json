@@ -39,5 +39,33 @@
       "Sitemap",
       "博客"
     ]
+  },
+  {
+    "slug": "博客_Next.js博客UI设计与主题改造_2026年02月14日23时30分00秒",
+    "title": "Next.js 博客系统 UI 设计与主题改造",
+    "excerpt": "参考若变的博客风格，使用 Next.js + Tailwind CSS 构建现代化的博客系统，实现亮色/暗色双主题、响应式设计和优雅的交互体验。",
+    "content": "\n# Next.js 博客系统 UI 设计与主题改造\n\n## 前言\n\n最近对自己的 Next.js 博客项目进行了一次全面的 UI 设计和主题改造。参考了[若变的博客](https://blog.cjf-rb.top/)的设计风格，打造了一个更加现代化、美观且功能完善的博客系统。\n\n## 设计目标\n\n1. **现代化的视觉设计** - 简洁、优雅、专业\n2. **双主题支持** - 亮色/暗色模式无缝切换\n3. **响应式布局** - 完美适配桌面端和移动端\n4. **流畅的交互体验** - 动画效果和过渡效果\n5. **完整的页面结构** - 首页、归档、分类、标签、关于\n\n## 主题系统设计\n\n### CSS 变量定义\n\n使用 CSS 变量来管理主题颜色，支持动态切换：\n\n```css\n:root {\n  /* 亮色主题 - 清新简约 */\n  --background: #f8fafc;\n  --foreground: #1e293b;\n  --card: #ffffff;\n  --primary: #3b82f6;\n  --primary-foreground: #ffffff",
+    "date": "2026-02-14",
+    "tags": [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "UI设计",
+      "主题切换"
+    ]
+  },
+  {
+    "slug": "博客_OpenCode配置文件修复指南_2026年02月14日21时22分00秒",
+    "title": "OpenCode 配置文件修复指南：从 JSON 错误到 LSP 配置",
+    "excerpt": "本文详细记录了修复 OpenCode 配置文件 (opencode.json) 的过程，包括 JSON 转义错误、无效配置键和 LSP 配置格式问题的解决方案。",
+    "content": "\n# OpenCode 配置文件修复指南：从 JSON 错误到 LSP 配置\n\n## 引言\n\n在使用 OpenCode 过程中，配置文件 `opencode.json` 的错误是常见的问题。本文将详细记录一次完整的配置文件修复过程，包括遇到的各种错误及其解决方案。\n\n## 问题描述\n\n在 Windows 系统上运行 OpenCode 时，遇到了配置文件解析错误：\n\n```bash\nPS C:\\Users\\14023\\WebstormProjects\\my-blog> opencode --hostname 127.0.0.1 --port 4097 --continue\nError: Config file at C:\\Users\\14023\\.config\\opencode\\opencode.json is not valid JSON(C):\n--- JSONC Input ---\n...\n--- Errors ---\nInvalidEscapeCharacter at line 108, column 19\n```\n\n## 错误原因分析\n\n经过分析，发现了三个主要问题：\n\n###",
+    "date": "2026-02-14T21:22:00",
+    "tags": [
+      "OpenCode",
+      "JSON",
+      "LSP",
+      "Windows",
+      "配置"
+    ]
   }
 ]
