@@ -1,5 +1,6 @@
 ---
 title: "修复 Next.js 博客中文文章 404 错误：从文件名到 Slug 的最佳实践"
+slug: "fix-nextjs-blog-chinese-404"
 date: "2026-02-15"
 excerpt: "详细记录修复 Next.js 博客部署到 Vercel 后中文文章无法访问的问题，包括问题分析、解决方案和最佳实践"
 tags: ["Next.js", "Vercel", "博客", "Slug", "部署", "中文URL", "静态生成"]
