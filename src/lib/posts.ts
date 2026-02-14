@@ -63,12 +63,12 @@ export function getAllPosts(): Post[] {
 // 根据 slug 获取单篇文章
 export function getPostBySlug(slug: string): Post | null {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.mdx`)
+    let fullPath = path.join(postsDirectory, `${slug}.mdx`)
     
+    // 如果 .mdx 不存在，尝试 .md
     if (!fs.existsSync(fullPath)) {
-      // 尝试 .md 扩展名
-      const mdPath = path.join(postsDirectory, `${slug}.md`)
-      if (!fs.existsSync(mdPath)) {
+      fullPath = path.join(postsDirectory, `${slug}.md`)
+      if (!fs.existsSync(fullPath)) {
         return null
       }
     }
