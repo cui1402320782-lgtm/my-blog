@@ -6,6 +6,11 @@ import { Calendar, Clock, Tag, ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 import { marked } from 'marked'
 
+// 配置 marked 为同步模式
+marked.setOptions({
+  async: false,
+})
+
 // 生成静态参数
 export async function generateStaticParams() {
   const posts = await getAllPosts()
@@ -47,8 +52,8 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     notFound()
   }
 
-  // 将 Markdown 转换为 HTML
-  const htmlContent = marked(post.content)
+  // 将 Markdown 转换为 HTML（同步版本）
+  const htmlContent = marked.parse(post.content) as string
 
   return (
     <div className="min-h-screen">
