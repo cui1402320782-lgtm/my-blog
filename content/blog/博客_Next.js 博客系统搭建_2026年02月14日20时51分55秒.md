@@ -1,3 +1,11 @@
+---
+title: "Next.js 博客系统搭建"
+date: "2026-02-14"
+excerpt: "从零开始搭建一个功能完善的 Next.js 博客系统，支持 Markdown/MDX、搜索、评论、RSS 和 SEO"
+tags: ["Next.js", "MDX", "Tailwind", "Fuse.js", "Giscus", "RSS", "Sitemap", "博客"]
+author: "OpenCode 用户"
+---
+
 # Next.js 博客系统搭建
 
 **发布时间**：2026年02月14日20时51分55秒  
@@ -32,7 +40,7 @@
 - 搜索对比
   - Fuse.js：浏览端搜索，轻量、中文支持需在索引阶段优化
   - Pagefind/Algolia：更强大但引入额外成本
-- 结论：以 Next.js 15 + TS 为核心框架，结合 MDX/Markdown、Fuse.js 实现本地搜索、Giscus 评论、RSS 与 sitemap 构建策略，达到“静态生成+ SEO 友好+ 搜索可用”的目标。
+- 结论：以 Next.js 15 + TS 为核心框架，结合 MDX/Markdown、Fuse.js 实现本地搜索、Giscus 评论、RSS 与 sitemap 构建策略，达到"静态生成+ SEO 友好+ 搜索可用"的目标。
 
 ## 详细实现步骤
 
@@ -100,7 +108,7 @@ export function getAllPosts(): PostMeta[] {
       const fullPath = path.join(POSTS_DIR, file);
       const raw = fs.readFileSync(fullPath, 'utf8');
       const { data } = matter(raw);
-      const slug = file.replace(/\\.mdx?$/, '');
+      const slug = file.replace(/\.mdx?$/, '');
       posts.push({
         title: data.title ?? slug,
         date: data.date ?? '',
@@ -126,3 +134,133 @@ export async function getPostBySlug(slug: string): Promise<{ meta: PostMeta; con
   const { content, data } = matter(file);
   return { meta: data as PostMeta, content };
 }
+```
+
+2) MDX/Markdown 渲染 (lib/mdx.ts)
+```ts
+// lib/mdx.ts
+import { serialize } from 'next-mdx-remote/serialize';
+import rehypePrism from 'rehype-prism-plus';
+import remarkGfm from 'remark-gfm';
+
+export async function renderMDX(source: string) {
+  const mdxSource = await serialize(source, {
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [rehypePrism],
+    },
+  });
+  return mdxSource;
+}
+```
+
+3) 博客文章路由页面 (app/blog/[slug]/page.tsx)
+```tsx
+// app/blog/[slug]/page.tsx
+import { notFound } from 'next/navigation';
+import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default async function PostPage({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug);
+  if (!post) return notFound();
+  return (
+    <article>
+      <h1>{post.meta.title}</h1>
+      <MDXRemote source={post.content} />
+    </article>
+  );
+}
+```
+
+4) 搜索组件实现 (components/Search.tsx)
+```tsx
+'use client';
+import { useState, useMemo } from 'react';
+import Fuse from 'fuse.js';
+
+export function Search({ posts }: { posts: PostMeta[] }) {
+  const [query, setQuery] = useState('');
+  const fuse = useMemo(() => new Fuse(posts, { keys: ['title', 'excerpt'], threshold: 0.4 }), [posts]);
+  const results = query ? fuse.search(query).map(r => r.item) : posts;
+  return (
+    <div>
+      <input value={query} onChange={e => setQuery(e.target.value)} placeholder="搜索文章..." />
+      <ul>{results.map(post => <li key={post.slug}>{post.title}</li>)}</ul>
+    </div>
+  );
+}
+```
+
+5) Giscus 评论组件 (components/Comments.tsx)
+```tsx
+'use client';
+import { useEffect, useRef } from 'react';
+
+export function Comments() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'yourname/blog-repo');
+    script.setAttribute('data-repo-id', 'R_xxx');
+    script.setAttribute('data-category', 'Blog Comments');
+    script.setAttribute('data-category-id', 'DIC_xxx');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-theme', 'preferred_color_scheme');
+    script.async = true;
+    ref.current?.appendChild(script);
+  }, []);
+  return <div ref={ref} />;
+}
+```
+
+6) RSS 生成脚本 (scripts/generate-rss.js)
+```js
+const fs = require('fs');
+const path = require('path');
+const { getAllPosts } = require('./lib/posts');
+
+const baseUrl = process.env.BASE_URL || 'https://example.com';
+const posts = getAllPosts();
+const rssItems = posts.map(p => `
+  <item>
+    <title>${p.title}</title>
+    <link>${baseUrl}/blog/${p.slug}</link>
+    <pubDate>${new Date(p.date).toUTCString()}</pubDate>
+    <description>${p.excerpt}</description>
+  </item>
+`).join('');
+
+const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>My Blog</title>
+    <link>${baseUrl}</link>
+    ${rssItems}
+  </channel>
+</rss>`;
+
+fs.writeFileSync(path.join(__dirname, '../public/rss.xml'), rss);
+```
+
+## 部署与验证
+
+- 构建：npm run build
+- 部署：Vercel/Netlify/静态托管
+- 验证：
+  - 首页文章列表
+  - 文章详情页渲染
+  - 搜索功能
+  - RSS / Sitemap 可访问
+  - 评论组件加载
+  - 响应式与暗色模式
+
+## 总结
+
+本博客系统以 Next.js 15 + TypeScript 为核心，实现了 Markdown/MDX 双格式支持、Fuse.js 本地搜索、Giscus 评论、自动生成 RSS 与 Sitemap、响应式暗色模式等完整功能，适合作为个人技术博客的基础架构。

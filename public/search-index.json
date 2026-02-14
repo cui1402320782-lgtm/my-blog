@@ -22,5 +22,22 @@
       "教程",
       "写作"
     ]
+  },
+  {
+    "slug": "博客_Next.js 博客系统搭建_2026年02月14日20时51分55秒",
+    "title": "Next.js 博客系统搭建",
+    "excerpt": "从零开始搭建一个功能完善的 Next.js 博客系统，支持 Markdown/MDX、搜索、评论、RSS 和 SEO",
+    "content": "\n# Next.js 博客系统搭建\n\n**发布时间**：2026年02月14日20时51分55秒  \n**作者**：OpenCode 用户  \n**标签**：Next.js, MDX, Tailwind, Fuse.js, Giscus, RSS, Sitemap, MD/MDX, TS\n\n---\n\n## 引言\n随着个人技术博客成为展示能力的重要手段，如何在一个现代前端框架内实现一个功能完备的博客系统，既要支持 Markdown/MDX 内容、评论、SEO、静态生成，又要具备搜索和 RSS 等能力，是一个值得系统化实现的练习。本次设计以 Next.js 15 + TypeScript 为核心，结合 Tailwind CSS、MDX/Markdown、Fuse.js 搜索、Giscus 评论等，目标是一个纯静态生成且 SEO 友好的博客系统，支持 md 和 mdx 两种格式。\n\n## 项目背景与需求\n- Markdown/MDX 内容渲染: 支持 .md 与 .mdx 两种文章格式\n- 博客文章管理: 文章目录、元数据、时间线\n- SEO: 自动生成 sitemap.xml 与 RSS ",
+    "date": "2026-02-14",
+    "tags": [
+      "Next.js",
+      "MDX",
+      "Tailwind",
+      "Fuse.js",
+      "Giscus",
+      "RSS",
+      "Sitemap",
+      "博客"
+    ]
   }
 ]
